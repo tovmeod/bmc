@@ -1,0 +1,5 @@
+django:
+  image: bmpcapp-image:latest
+  port: 8000
+  environment:
+    USE_CSV: "/data/titanic.csv"

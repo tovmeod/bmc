@@ -1,0 +1,4 @@
+apiVersion: v2
+name: bmc_helm_chart
+description: The Helm chart for deploying the bmc passenger django app
+version: 0.1

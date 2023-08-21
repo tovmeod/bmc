@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bmc-django-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: bmc-django-app
+  template:
+    metadata:
+      labels:
+        app: bmc-django-app
+    spec:
+      containers:
+        - name: data-container
+          image: alpine:latest
+          command: ["sh", "-c", "while true; do sleep 86400; done"]  # Keep the container running
+          volumeMounts:
+            - mountPath: /data
+              name: data-volume
+        - name: django-app
+          image: {{ .Values.django.image }}
+          ports:
+            - containerPort: {{ .Values.django.port }}
+          env:
+            - name: USE_CSV
+              value: {{ .Values.django.environment.USE_CSV }}
+          volumeMounts:
+            - mountPath: /data
+              name: data-volume
+      volumes:
+        - name: data-volume
+          emptyDir: {}
