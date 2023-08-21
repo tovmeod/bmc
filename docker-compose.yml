@@ -1,0 +1,18 @@
+version: '3'
+services:
+  data_container:
+    build:
+      context: ./
+    volumes:
+      - data_volume:/data
+
+  django_app:
+    build:
+      context: ./
+    volumes:
+      - data_volume:/data
+    environment:
+      - USE_CSV=/data/titanic.csv
+
+volumes:
+  data_volume:
